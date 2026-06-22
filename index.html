@@ -4,468 +4,372 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Rehab">
-<meta name="theme-color" content="#1a1a2e">
+<meta name="theme-color" content="#1B4332">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Rutina · Espalda & Cadera</title>
+<title>Rehab · Espalda & Cadera</title>
 <style>
-  :root {
-    --bg: #F7F6F2;
-    --surface: #FFFFFF;
-    --surface2: #F0EFE9;
-    --border: rgba(0,0,0,0.08);
-    --text: #1C1C1E;
-    --text2: #6B6B70;
-    --text3: #AEAEB2;
-    --amber: #D4820A;
-    --amber-bg: #FEF3DC;
-    --teal: #0F7B5A;
-    --teal-bg: #E0F4EC;
-    --blue: #1A5FAD;
-    --blue-bg: #E3EEFA;
-    --purple: #5340B8;
-    --purple-bg: #EDEAFC;
-    --red: #C0392B;
-    --red-bg: #FDECEB;
-    --accent: #2A6049;
-    --accent-light: #D6EDE5;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-  }
+:root {
+  --bg: #F2F4F0;
+  --surface: #FFFFFF;
+  --surface2: #E8EDE5;
+  --border: rgba(0,0,0,0.07);
+  --text: #1A1A1A;
+  --text2: #5A5A5A;
+  --text3: #AAAAAA;
+  --green: #1B4332;
+  --green-mid: #2D6A4F;
+  --green-light: #52B788;
+  --green-bg: #D8F3DC;
+  --amber: #B45309;
+  --amber-bg: #FEF3C7;
+  --blue: #1D4ED8;
+  --blue-bg: #DBEAFE;
+  --purple: #6D28D9;
+  --purple-bg: #EDE9FE;
+  --teal: #0F766E;
+  --teal-bg: #CCFBF1;
+  --express: #B45309;
+  --express-bg: #FEF3C7;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.04);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 88px;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* HEADER */
+.app-header {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 100%);
+  color: #fff;
+  padding: 54px 20px 18px;
+}
+.header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.header-icon {
+  width: 42px; height: 42px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.header-icon svg { width: 24px; height: 24px; }
+.header-text h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.header-text p { font-size: 12px; opacity: 0.7; margin-top: 1px; }
+.progress-row { display: flex; align-items: center; gap: 10px; }
+.progress-track { flex: 1; height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: #fff; border-radius: 3px; transition: width 0.4s ease; width: 0%; }
+.progress-label { font-size: 12px; color: rgba(255,255,255,0.8); min-width: 32px; text-align: right; font-weight: 600; }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding-bottom: 90px;
-  }
+/* TABS */
+.tabs-wrap {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  display: flex; gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0;
+  padding: 13px 14px;
+  font-size: 13px; font-weight: 500;
+  color: var(--text2);
+  background: none; border: none;
+  border-bottom: 2.5px solid transparent;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  display: flex; align-items: center; gap: 5px;
+}
+.tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
+.tab-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--express); display: none; }
+.tab.express-tab .tab-dot { display: block; }
 
-  /* HEADER */
-  .app-header {
-    background: var(--accent);
-    color: #fff;
-    padding: 52px 20px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .app-header h1 {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-  }
-  .app-header p {
-    font-size: 13px;
-    opacity: 0.75;
-    margin-top: 2px;
-  }
-  .progress-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 14px;
-  }
-  .progress-track {
-    flex: 1;
-    height: 4px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: #fff;
-    border-radius: 2px;
-    transition: width 0.4s ease;
-    width: 0%;
-  }
-  .progress-label {
-    font-size: 12px;
-    color: rgba(255,255,255,0.8);
-    min-width: 36px;
-    text-align: right;
-  }
+/* CONTENT */
+.content { padding: 14px 14px 0; }
+.section { display: none; }
+.section.active { display: block; }
 
-  /* TABS */
-  .tabs-wrap {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 16px;
-    display: flex;
-    gap: 4px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .tabs-wrap::-webkit-scrollbar { display: none; }
-  .tab {
-    flex-shrink: 0;
-    padding: 12px 16px;
-    font-size: 14px;
-    color: var(--text2);
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    font-weight: 500;
-    transition: color 0.15s, border-color 0.15s;
-  }
-  .tab.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
+/* BANNER */
+.intro-banner {
+  background: var(--green-bg);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--green);
+  line-height: 1.55;
+  display: flex; gap: 9px; align-items: flex-start;
+}
+.intro-banner svg { flex-shrink: 0; margin-top: 1px; width: 15px; height: 15px; }
+.intro-banner strong { font-weight: 600; }
 
-  /* CONTENT */
-  .content {
-    padding: 16px;
-  }
-  .section { display: none; }
-  .section.active { display: block; }
+.express-banner {
+  background: var(--express-bg);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--express);
+  line-height: 1.55;
+  display: flex; gap: 9px; align-items: flex-start;
+}
+.express-banner svg { flex-shrink: 0; margin-top: 1px; width: 15px; height: 15px; }
 
-  /* DATE BADGE */
-  .date-badge {
-    font-size: 12px;
-    color: var(--text3);
-    text-align: center;
-    margin-bottom: 12px;
-    letter-spacing: 0.02em;
-  }
+.done-banner {
+  display: none;
+  background: var(--green);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 14px;
+  animation: popIn 0.3s ease;
+}
+.done-banner.show { display: block; }
+@keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.done-banner .big { font-size: 32px; margin-bottom: 4px; }
+.done-banner p { font-size: 14px; opacity: 0.9; }
 
-  /* BLOCK LABEL */
-  .block-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin: 20px 0 8px;
-  }
-  .block-label:first-child { margin-top: 0; }
+/* BLOCK LABEL */
+.block-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin: 18px 2px 8px;
+}
+.block-label:first-of-type { margin-top: 2px; }
 
-  /* EXERCISE CARD */
-  .ex-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    margin-bottom: 10px;
-    overflow: hidden;
-    transition: opacity 0.2s;
-  }
-  .ex-card.done {
-    opacity: 0.55;
-  }
-  .ex-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .ex-check {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 2px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.2s;
-    background: var(--surface);
-  }
-  .ex-check.checked {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-  .ex-check svg { display: none; }
-  .ex-check.checked svg { display: block; }
+/* EXERCISE CARD */
+.ex-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 9px;
+  overflow: hidden;
+  transition: opacity 0.25s, transform 0.15s;
+  border: 1.5px solid transparent;
+}
+.ex-card.done { opacity: 0.5; }
+.ex-card.open { border-color: var(--green-bg); }
 
-  .ex-info { flex: 1; min-width: 0; }
-  .ex-name {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.3;
-  }
-  .ex-meta {
-    font-size: 12px;
-    color: var(--text2);
-    margin-top: 2px;
-  }
+.ex-header {
+  display: flex; align-items: center; gap: 11px;
+  padding: 13px 14px;
+  cursor: pointer; user-select: none;
+}
 
-  .ex-tag {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    padding: 3px 8px;
-    border-radius: 20px;
-    flex-shrink: 0;
-  }
-  .tag-liberar { background: var(--amber-bg); color: var(--amber); }
-  .tag-activar { background: var(--teal-bg); color: var(--teal); }
-  .tag-estabilizar { background: var(--blue-bg); color: var(--blue); }
-  .tag-movilizar { background: var(--purple-bg); color: var(--purple); }
+.ex-check {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid #D0D0D0;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  background: var(--surface);
+}
+.ex-check.checked { background: var(--green-light); border-color: var(--green-light); }
+.ex-check svg { display: none; }
+.ex-check.checked svg { display: block; }
 
-  .ex-chevron {
-    width: 18px;
-    height: 18px;
-    color: var(--text3);
-    flex-shrink: 0;
-    transition: transform 0.2s;
-  }
-  .ex-card.open .ex-chevron { transform: rotate(180deg); }
+.ex-info { flex: 1; min-width: 0; }
+.ex-name { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.ex-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
 
-  /* DETAIL */
-  .ex-detail {
-    display: none;
-    padding: 0 16px 16px;
-    border-top: 1px solid var(--border);
-    margin-top: 0;
-  }
-  .ex-card.open .ex-detail { display: block; }
+.ex-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 3px 8px; border-radius: 20px; flex-shrink: 0;
+}
+.tag-liberar { background: var(--amber-bg); color: var(--amber); }
+.tag-activar { background: var(--teal-bg); color: var(--teal); }
+.tag-estabilizar { background: var(--blue-bg); color: var(--blue); }
+.tag-movilizar { background: var(--purple-bg); color: var(--purple); }
+.tag-express { background: var(--express-bg); color: var(--express); }
 
-  .detail-grid {
-    display: grid;
-    gap: 10px;
-    margin-top: 12px;
-  }
-  .detail-item {}
-  .detail-item .lbl {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text3);
-    margin-bottom: 3px;
-  }
-  .detail-item .val {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.55;
-  }
+.ex-chevron {
+  width: 17px; height: 17px; color: var(--text3);
+  flex-shrink: 0; transition: transform 0.2s;
+}
+.ex-card.open .ex-chevron { transform: rotate(180deg); }
 
-  .tip-box {
-    background: var(--accent-light);
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--accent);
-    line-height: 1.55;
-  }
-  .tip-box strong { font-weight: 600; }
+.ex-detail {
+  display: none;
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+}
+.ex-card.open .ex-detail { display: block; }
 
-  .check-btn {
-    width: 100%;
-    margin-top: 14px;
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--accent);
-    background: transparent;
-    color: var(--accent);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.18s;
-  }
-  .check-btn:active { transform: scale(0.98); }
-  .ex-card.done .check-btn {
-    background: var(--accent);
-    color: #fff;
-  }
+.detail-grid { display: grid; gap: 10px; margin-top: 12px; }
+.detail-item .lbl {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text3); margin-bottom: 3px;
+}
+.detail-item .val { font-size: 14px; color: var(--text); line-height: 1.55; }
 
-  /* ALERT CARD */
-  .alert-card {
-    background: var(--amber-bg);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-top: 16px;
-    font-size: 13px;
-    color: #7A4A06;
-    line-height: 1.6;
-  }
-  .alert-card strong { font-weight: 600; }
+.tip-box {
+  background: var(--green-bg);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--green);
+  line-height: 1.55;
+}
+.tip-box strong { font-weight: 600; }
 
-  /* GOLF CARDS */
-  .golf-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    margin-bottom: 10px;
-    padding: 16px;
-  }
-  .golf-card-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .golf-card-title span {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--purple-bg);
-    color: var(--purple);
-    font-size: 12px;
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .golf-card p {
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.6;
-  }
+.check-btn {
+  width: 100%; margin-top: 13px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--green-light);
+  background: transparent;
+  color: var(--green);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.18s;
+}
+.check-btn:active { transform: scale(0.98); }
+.ex-card.done .check-btn { background: var(--green-light); color: #fff; border-color: var(--green-light); }
 
-  /* HISTORY / STREAK */
-  .streak-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 20px;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-  .streak-num {
-    font-size: 52px;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .streak-lbl {
-    font-size: 13px;
-    color: var(--text2);
-    margin-top: 4px;
-  }
+/* EXPRESS CARD VARIANT */
+.ex-card.express-style.open { border-color: var(--express-bg); }
+.ex-card.express-style .check-btn { border-color: var(--express); color: var(--express); }
+.ex-card.express-style.done .check-btn { background: var(--express); color: #fff; border-color: var(--express); }
+.ex-card.express-style .ex-check.checked { background: var(--express); border-color: var(--express); }
 
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin-top: 12px;
-  }
-  .cal-day {
-    aspect-ratio: 1;
-    border-radius: 6px;
-    background: var(--surface2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: var(--text3);
-    font-weight: 500;
-  }
-  .cal-day.done-day { background: var(--accent); color: #fff; }
-  .cal-day.today { border: 2px solid var(--accent); color: var(--accent); font-weight: 700; }
-  .cal-day.today.done-day { color: #fff; }
-  .cal-day.empty { background: transparent; }
+/* ALERT */
+.alert-card {
+  background: var(--amber-bg);
+  border-radius: var(--radius);
+  padding: 13px 15px;
+  margin-top: 14px;
+  font-size: 13px; color: #7A4A06;
+  line-height: 1.6;
+}
+.alert-card strong { font-weight: 600; }
 
-  .cal-header {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin-bottom: 4px;
-  }
-  .cal-header span {
-    text-align: center;
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
+/* GOLF CARDS */
+.golf-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+  padding: 15px;
+}
+.golf-card-title {
+  font-size: 15px; font-weight: 600;
+  color: var(--text);
+  margin-bottom: 7px;
+  display: flex; align-items: center; gap: 9px;
+}
+.golf-card-title span {
+  width: 26px; height: 26px; border-radius: 8px;
+  background: var(--purple-bg); color: var(--purple);
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.golf-card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
 
-  .reset-btn {
-    width: 100%;
-    margin-top: 16px;
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border);
-    background: transparent;
-    color: var(--text2);
-    font-size: 14px;
-    cursor: pointer;
-  }
+/* HISTORIAL */
+.streak-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.streak-card {
+  flex: 1;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  text-align: center;
+}
+.streak-num { font-size: 42px; font-weight: 800; color: var(--green); line-height: 1; }
+.streak-lbl { font-size: 11px; color: var(--text2); margin-top: 4px; font-weight: 500; }
 
-  /* BOTTOM NAV */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    display: flex;
-    padding-bottom: env(safe-area-inset-bottom);
-    z-index: 200;
-  }
-  .nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0 8px;
-    gap: 3px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text3);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    transition: color 0.15s;
-  }
-  .nav-item.active { color: var(--accent); }
-  .nav-item svg { width: 22px; height: 22px; }
+.cal-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.cal-month { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 12px; }
+.cal-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 4px; }
+.cal-header span { text-align: center; font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-day {
+  aspect-ratio: 1; border-radius: 8px;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text3); font-weight: 500;
+}
+.cal-day.done-full { background: var(--green); color: #fff; }
+.cal-day.done-express { background: var(--green-light); color: #fff; }
+.cal-day.today { border: 2px solid var(--green); color: var(--green); font-weight: 700; }
+.cal-day.today.done-full, .cal-day.today.done-express { color: #fff; }
+.cal-day.empty { background: transparent; }
 
-  /* INTRO BANNER */
-  .intro-banner {
-    background: var(--accent-light);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    font-size: 13px;
-    color: var(--accent);
-    line-height: 1.6;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .intro-banner svg { flex-shrink: 0; margin-top: 1px; }
+.legend { display: flex; gap: 14px; margin-top: 10px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
 
-  /* DONE BANNER */
-  .done-banner {
-    display: none;
-    background: var(--accent);
-    color: #fff;
-    border-radius: var(--radius);
-    padding: 16px;
-    text-align: center;
-    margin-bottom: 16px;
-  }
-  .done-banner.show { display: block; }
-  .done-banner .big { font-size: 28px; margin-bottom: 4px; }
-  .done-banner p { font-size: 14px; opacity: 0.9; }
+.reset-btn {
+  width: 100%; margin-top: 4px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text2); font-size: 14px;
+  cursor: pointer;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 200;
+}
+.nav-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 10px 0 8px; gap: 3px;
+  background: none; border: none;
+  cursor: pointer;
+  color: var(--text3);
+  font-size: 10px; font-weight: 500;
+  transition: color 0.15s;
+}
+.nav-item.active { color: var(--green); }
+.nav-item svg { width: 22px; height: 22px; }
 </style>
 </head>
 <body>
 
 <header class="app-header">
-  <h1>Rutina · Espalda & Cadera</h1>
-  <p id="header-sub">Cargando...</p>
+  <div class="header-top">
+    <div class="header-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6.5 6.5a4 4 0 0 1 5.5 0l5.5 5.5a4 4 0 0 1-5.5 5.5"/>
+        <path d="M14 9l-7.5 7.5"/>
+        <circle cx="5" cy="19" r="1" fill="white" stroke="none"/>
+        <circle cx="19" cy="5" r="1" fill="white" stroke="none"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Rehab · Espalda & Cadera</h1>
+      <p id="header-date">Cargando...</p>
+    </div>
+  </div>
   <div class="progress-row">
     <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
     <span class="progress-label" id="prog-label">0/0</span>
@@ -473,9 +377,10 @@
 </header>
 
 <div class="tabs-wrap" id="main-tabs">
-  <button class="tab active" onclick="showTab('diaria', this)">Diaria</button>
-  <button class="tab" onclick="showTab('pregolf', this)">Pre-golf</button>
-  <button class="tab" onclick="showTab('golf', this)">Golf</button>
+  <button class="tab active" onclick="showTab('diaria',this)">Diaria</button>
+  <button class="tab express-tab" onclick="showTab('express',this)"><span class="tab-dot"></span>Express</button>
+  <button class="tab" onclick="showTab('pregolf',this)">Pre-golf</button>
+  <button class="tab" onclick="showTab('golf',this)">Golf</button>
   <button class="tab" onclick="showNav('historial')">Historial</button>
 </div>
 
@@ -484,26 +389,20 @@
   <!-- DIARIA -->
   <div class="section active" id="tab-diaria">
     <div class="done-banner" id="banner-diaria">
-      <div class="big">✓</div>
-      <p>¡Rutina completada! Registrada en tu historial.</p>
+      <div class="big">🎉</div>
+      <p>¡Rutina completa! Registrada en tu historial.</p>
     </div>
-
     <div class="intro-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span><strong>15–20 min · todos los días.</strong> Primero libera, luego activa. El orden importa.</span>
     </div>
 
     <div class="block-label">Bloque A — Liberación</div>
 
-    <div class="ex-card" id="ex-0" data-section="diaria">
+    <div class="ex-card" id="ex-0">
       <div class="ex-header" onclick="toggleCard('ex-0')">
-        <div class="ex-check" id="chk-0" onclick="toggleDone(event,'ex-0',0)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Hip flexor lunge</div>
-          <div class="ex-meta">3 series · 45 seg cada lado · izquierdo primero</div>
-        </div>
+        <div class="ex-check" id="chk-d-0" onclick="toggleDone(event,'diaria',0)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Hip flexor lunge</div><div class="ex-meta">3 series · 45 seg cada lado · izquierdo primero</div></div>
         <span class="ex-tag tag-liberar">Liberar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
@@ -513,20 +412,15 @@
           <div class="detail-item"><div class="lbl">Clave</div><div class="val">Antes de avanzar: retroversión pélvica activa. Mete el abdomen y aplana la espalda baja. Sin esto no estiras el psoas.</div></div>
           <div class="detail-item"><div class="lbl">Progresión</div><div class="val">Avanza levemente el torso hacia adelante sin arquear la espalda.</div></div>
         </div>
-        <div class="tip-box"><strong>El ejercicio más importante de toda la rutina.</strong> Tu psoas acortado es la causa directa del anterior pelvic tilt y del dolor lumbar. Hacerlo bien equivale a descargar L4-L5.</div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-0',0)">Marcar como hecho</button>
+        <div class="tip-box"><strong>El ejercicio más importante.</strong> Tu psoas acortado es la causa directa del anterior pelvic tilt y del dolor lumbar.</div>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',0)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="ex-card" id="ex-1" data-section="diaria">
+    <div class="ex-card" id="ex-1">
       <div class="ex-header" onclick="toggleCard('ex-1')">
-        <div class="ex-check" id="chk-1" onclick="toggleDone(event,'ex-1',1)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Estiramiento de cuádriceps en decúbito lateral</div>
-          <div class="ex-meta">2 series · 40 seg cada lado</div>
-        </div>
+        <div class="ex-check" id="chk-d-1" onclick="toggleDone(event,'diaria',1)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Estiramiento cuádriceps · decúbito lateral</div><div class="ex-meta">2 series · 40 seg cada lado</div></div>
         <span class="ex-tag tag-liberar">Liberar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
@@ -535,19 +429,14 @@
           <div class="detail-item"><div class="lbl">Posición</div><div class="val">Acostado de lado. Llevas el talón al glúteo con la mano.</div></div>
           <div class="detail-item"><div class="lbl">Clave</div><div class="val">Mantén la pelvis neutra. No arquees la espalda para "llegar más lejos".</div></div>
         </div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-1',1)">Marcar como hecho</button>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',1)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="ex-card" id="ex-2" data-section="diaria">
+    <div class="ex-card" id="ex-2">
       <div class="ex-header" onclick="toggleCard('ex-2')">
-        <div class="ex-check" id="chk-2" onclick="toggleDone(event,'ex-2',2)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Figura 4 acostado (TFL / banda iliotibial)</div>
-          <div class="ex-meta">2 series · 40 seg cada lado</div>
-        </div>
+        <div class="ex-check" id="chk-d-2" onclick="toggleDone(event,'diaria',2)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Figura 4 · TFL / banda iliotibial</div><div class="ex-meta">2 series · 40 seg cada lado</div></div>
         <span class="ex-tag tag-liberar">Liberar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
@@ -556,265 +445,205 @@
           <div class="detail-item"><div class="lbl">Posición</div><div class="val">Boca arriba. Pie izquierdo sobre rodilla derecha. Llevas ambas piernas hacia el pecho.</div></div>
           <div class="detail-item"><div class="lbl">Dónde sentirlo</div><div class="val">Cara lateral de la cadera izquierda. Si no lo sientes, acerca más las piernas al pecho.</div></div>
         </div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-2',2)">Marcar como hecho</button>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',2)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="ex-card" id="ex-3" data-section="diaria">
+    <div class="ex-card" id="ex-3">
       <div class="ex-header" onclick="toggleCard('ex-3')">
-        <div class="ex-check" id="chk-3" onclick="toggleDone(event,'ex-3',3)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Cat-cow lento</div>
-          <div class="ex-meta">10 repeticiones · muy lento, respirando</div>
-        </div>
+        <div class="ex-check" id="chk-d-3" onclick="toggleDone(event,'diaria',3)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Cat-cow lento</div><div class="ex-meta">10 repeticiones · respiración controlada</div></div>
         <span class="ex-tag tag-movilizar">Movilizar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="ex-detail">
         <div class="detail-grid">
           <div class="detail-item"><div class="lbl">Posición</div><div class="val">En cuatro puntos (manos y rodillas).</div></div>
-          <div class="detail-item"><div class="lbl">Énfasis</div><div class="val">La fase "cat" (columna redondeada, retroversión) descomprime L4-L5. Hazla más lenta que la fase "cow". Inhala en cow, exhala en cat.</div></div>
+          <div class="detail-item"><div class="lbl">Énfasis</div><div class="val">La fase "cat" (columna redondeada) descomprime L4-L5. Hazla más lenta. Inhala en cow, exhala en cat.</div></div>
         </div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-3',3)">Marcar como hecho</button>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',3)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="block-label">Bloque B — Activación y fortalecimiento</div>
+    <div class="block-label">Bloque B — Activación</div>
 
-    <div class="ex-card" id="ex-4" data-section="diaria">
+    <div class="ex-card" id="ex-4">
       <div class="ex-header" onclick="toggleCard('ex-4')">
-        <div class="ex-check" id="chk-4" onclick="toggleDone(event,'ex-4',4)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Clamshell</div>
-          <div class="ex-meta">3 series · 15 reps cada lado · izquierdo arriba primero</div>
-        </div>
+        <div class="ex-check" id="chk-d-4" onclick="toggleDone(event,'diaria',4)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Clamshell</div><div class="ex-meta">3 series · 15 reps cada lado · izquierdo arriba primero</div></div>
         <span class="ex-tag tag-activar">Activar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="ex-detail">
         <div class="detail-grid">
-          <div class="detail-item"><div class="lbl">Posición</div><div class="val">Acostado de lado, rodillas flexionadas 45°, pies juntos.</div></div>
-          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Abre la rodilla de arriba como almeja. Rango pequeño y controlado — no es amplitud, es activación del glúteo medio.</div></div>
-          <div class="detail-item"><div class="lbl">Error común</div><div class="val">Si sientes el ejercicio en la cara lateral del muslo (no en el glúteo), reduce el rango hasta sentirlo en el glúteo.</div></div>
+          <div class="detail-item"><div class="lbl">Posición</div><div class="val">Acostado de lado, rodillas 45°, pies juntos.</div></div>
+          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Abre la rodilla de arriba. Rango pequeño y controlado — no es amplitud, es activación del glúteo medio.</div></div>
+          <div class="detail-item"><div class="lbl">Error común</div><div class="val">Si lo sientes en la cara lateral del muslo, reduce el rango hasta que lo sientas en el glúteo.</div></div>
         </div>
-        <div class="tip-box">El glúteo medio es el estabilizador pélvico más importante y probablemente está muy inhibido por la cadera izquierda dañada.</div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-4',4)">Marcar como hecho</button>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',4)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="ex-card" id="ex-5" data-section="diaria">
+    <div class="ex-card" id="ex-5">
       <div class="ex-header" onclick="toggleCard('ex-5')">
-        <div class="ex-check" id="chk-5" onclick="toggleDone(event,'ex-5',5)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Glute bridge</div>
-          <div class="ex-meta">3 series · 12 reps · pausa 2 seg arriba</div>
-        </div>
+        <div class="ex-check" id="chk-d-5" onclick="toggleDone(event,'diaria',5)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Glute bridge</div><div class="ex-meta">3 series · 12 reps · pausa 2 seg arriba</div></div>
         <span class="ex-tag tag-activar">Activar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="ex-detail">
         <div class="detail-grid">
-          <div class="detail-item"><div class="lbl">Posición</div><div class="val">Boca arriba, rodillas flexionadas, pies apoyados.</div></div>
-          <div class="detail-item"><div class="lbl">Secuencia</div><div class="val">1) Retroversión pélvica activa (aplana la espalda contra el suelo). 2) Sube la pelvis apretando glúteos. No con la espalda.</div></div>
-          <div class="detail-item"><div class="lbl">Progresión</div><div class="val">Cuando sea fácil: una sola pierna. Comienza con la derecha; la izquierda con mucha precaución.</div></div>
+          <div class="detail-item"><div class="lbl">Secuencia</div><div class="val">1) Retroversión pélvica (aplana la espalda). 2) Sube la pelvis apretando glúteos. No con la espalda.</div></div>
+          <div class="detail-item"><div class="lbl">Progresión</div><div class="val">Una sola pierna cuando sea fácil. Comienza con la derecha.</div></div>
         </div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-5',5)">Marcar como hecho</button>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',5)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="ex-card" id="ex-6" data-section="diaria">
+    <div class="ex-card" id="ex-6">
       <div class="ex-header" onclick="toggleCard('ex-6')">
-        <div class="ex-check" id="chk-6" onclick="toggleDone(event,'ex-6',6)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Dead bug</div>
-          <div class="ex-meta">3 series · 8 reps por lado</div>
-        </div>
+        <div class="ex-check" id="chk-d-6" onclick="toggleDone(event,'diaria',6)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Dead bug</div><div class="ex-meta">3 series · 8 reps por lado</div></div>
         <span class="ex-tag tag-estabilizar">Estabilizar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="ex-detail">
         <div class="detail-grid">
           <div class="detail-item"><div class="lbl">Posición</div><div class="val">Boca arriba, brazos al techo, caderas y rodillas a 90°.</div></div>
-          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Extiende simultáneamente brazo derecho y pierna izquierda. Vuelve. Alterna.</div></div>
-          <div class="detail-item"><div class="lbl">Regla crítica</div><div class="val">La espalda baja pegada al suelo en todo momento. Si se despega, el rango es demasiado grande — reduce.</div></div>
+          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Extiende brazo derecho y pierna izquierda. Vuelve. Alterna.</div></div>
+          <div class="detail-item"><div class="lbl">Regla crítica</div><div class="val">Espalda baja pegada al suelo en todo momento. Si se despega, reduce el rango.</div></div>
         </div>
         <div class="tip-box">Core profundo sin comprimir la columna. Fundamental para estabilizar L4-L5.</div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-6',6)">Marcar como hecho</button>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',6)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="ex-card" id="ex-7" data-section="diaria">
+    <div class="ex-card" id="ex-7">
       <div class="ex-header" onclick="toggleCard('ex-7')">
-        <div class="ex-check" id="chk-7" onclick="toggleDone(event,'ex-7',7)">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="ex-info">
-          <div class="ex-name">Bird dog</div>
-          <div class="ex-meta">3 series · 10 reps por lado</div>
-        </div>
+        <div class="ex-check" id="chk-d-7" onclick="toggleDone(event,'diaria',7)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Bird dog</div><div class="ex-meta">3 series · 10 reps por lado</div></div>
         <span class="ex-tag tag-estabilizar">Estabilizar</span>
         <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="ex-detail">
         <div class="detail-grid">
-          <div class="detail-item"><div class="lbl">Posición</div><div class="val">En cuatro puntos.</div></div>
-          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Extiende brazo derecho y pierna izquierda. Pausa 2 segundos. Vuelve. Alterna.</div></div>
-          <div class="detail-item"><div class="lbl">Clave</div><div class="val">La pelvis absolutamente horizontal — no dejes caer la cadera del lado de la pierna extendida.</div></div>
+          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Brazo derecho y pierna izquierda. Pausa 2 seg. Vuelve. Alterna.</div></div>
+          <div class="detail-item"><div class="lbl">Clave</div><div class="val">Pelvis absolutamente horizontal — no dejes caer la cadera del lado de la pierna extendida.</div></div>
         </div>
-        <button class="check-btn" onclick="toggleDone(event,'ex-7',7)">Marcar como hecho</button>
+        <button class="check-btn" onclick="toggleDone(event,'diaria',7)">Marcar como hecho</button>
       </div>
     </div>
 
-    <div class="alert-card">
-      <strong>⚠ Pendiente:</strong> el radiólogo recomendó RM de articulaciones sacroilíacas (Nov 2025). Si no la has realizado, coordínala con tu médico — puede cambiar parte del manejo.
+    <div class="alert-card" style="margin-bottom:6px">
+      <strong>⚠ Pendiente:</strong> RM articulaciones sacroilíacas recomendada por radiólogo (Nov 2025). Coordínala con tu médico.
+    </div>
+  </div>
+
+  <!-- EXPRESS -->
+  <div class="section" id="tab-express">
+    <div class="done-banner" id="banner-express">
+      <div class="big">⚡</div>
+      <p>¡Express completado! Registrado en tu historial.</p>
+    </div>
+    <div class="express-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span><strong>~7 min · los 3 ejercicios clave.</strong> Para días sin tiempo. No es ideal, pero es infinitamente mejor que no hacer nada.</span>
+    </div>
+
+    <div class="ex-card express-style" id="xe-0">
+      <div class="ex-header" onclick="toggleCard('xe-0')">
+        <div class="ex-check" id="chk-e-0" onclick="toggleDone(event,'express',0)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Hip flexor lunge</div><div class="ex-meta">3 series · 45 seg cada lado · izquierdo primero</div></div>
+        <span class="ex-tag tag-express">⚡ Esencial</span>
+        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="ex-detail">
+        <div class="detail-grid">
+          <div class="detail-item"><div class="lbl">Clave</div><div class="val">Retroversión pélvica activa antes de avanzar. Mete el abdomen y aplana la espalda baja.</div></div>
+        </div>
+        <div class="tip-box"><strong>Por qué es primero:</strong> libera el psoas, la causa raíz del dolor lumbar y del anterior pelvic tilt.</div>
+        <button class="check-btn" onclick="toggleDone(event,'express',0)">Marcar como hecho</button>
+      </div>
+    </div>
+
+    <div class="ex-card express-style" id="xe-1">
+      <div class="ex-header" onclick="toggleCard('xe-1')">
+        <div class="ex-check" id="chk-e-1" onclick="toggleDone(event,'express',1)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Clamshell</div><div class="ex-meta">3 series · 15 reps cada lado · izquierdo primero</div></div>
+        <span class="ex-tag tag-express">⚡ Esencial</span>
+        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="ex-detail">
+        <div class="detail-grid">
+          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Abre la rodilla de arriba. Rango pequeño — sentirlo en el glúteo, no en la cara lateral del muslo.</div></div>
+        </div>
+        <div class="tip-box"><strong>Por qué es segundo:</strong> activa el glúteo medio, el estabilizador pélvico lateral que más falla en tu caso.</div>
+        <button class="check-btn" onclick="toggleDone(event,'express',1)">Marcar como hecho</button>
+      </div>
+    </div>
+
+    <div class="ex-card express-style" id="xe-2">
+      <div class="ex-header" onclick="toggleCard('xe-2')">
+        <div class="ex-check" id="chk-e-2" onclick="toggleDone(event,'express',2)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="ex-info"><div class="ex-name">Dead bug</div><div class="ex-meta">3 series · 8 reps por lado</div></div>
+        <span class="ex-tag tag-express">⚡ Esencial</span>
+        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="ex-detail">
+        <div class="detail-grid">
+          <div class="detail-item"><div class="lbl">Regla crítica</div><div class="val">Espalda baja pegada al suelo en todo momento. Si se despega, reduce el rango.</div></div>
+        </div>
+        <div class="tip-box"><strong>Por qué es tercero:</strong> activa el core profundo (transverso abdominal) que estabiliza L4-L5 sin comprimir la columna.</div>
+        <button class="check-btn" onclick="toggleDone(event,'express',2)">Marcar como hecho</button>
+      </div>
     </div>
   </div>
 
   <!-- PRE-GOLF -->
   <div class="section" id="tab-pregolf">
     <div class="intro-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span><strong>10 min · antes de salir.</strong> No en el hoyo 1 — en casa o en el camarín.</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span><strong>10 min · antes de salir.</strong> En casa o en el camarín — nunca en el hoyo 1.</span>
     </div>
-
-    <div class="ex-card" id="pg-0">
-      <div class="ex-header" onclick="toggleCard('pg-0')">
-        <div class="ex-info">
-          <div class="ex-name">Hip flexor lunge</div>
-          <div class="ex-meta">2 series · 30 seg cada lado</div>
-        </div>
-        <span class="ex-tag tag-liberar">Liberar</span>
-        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="ex-detail">
-        <div class="detail-grid">
-          <div class="detail-item"><div class="val">Misma técnica que la rutina diaria. Retroversión pélvica activa antes de avanzar.</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ex-card" id="pg-1">
-      <div class="ex-header" onclick="toggleCard('pg-1')">
-        <div class="ex-info">
-          <div class="ex-name">Clamshell</div>
-          <div class="ex-meta">2 series · 12 reps cada lado</div>
-        </div>
-        <span class="ex-tag tag-activar">Activar</span>
-        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="ex-detail">
-        <div class="detail-grid">
-          <div class="detail-item"><div class="val">Activa el glúteo medio antes de cargar la cadera. Crítico para estabilizar la pelvis durante el swing.</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ex-card" id="pg-2">
-      <div class="ex-header" onclick="toggleCard('pg-2')">
-        <div class="ex-info">
-          <div class="ex-name">Glute bridge</div>
-          <div class="ex-meta">2 series · 10 reps</div>
-        </div>
-        <span class="ex-tag tag-activar">Activar</span>
-        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="ex-detail">
-        <div class="detail-grid">
-          <div class="detail-item"><div class="val">Activa glúteo mayor e isquiotibiales. Prepara la cadena posterior para el impacto del swing.</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ex-card" id="pg-3">
-      <div class="ex-header" onclick="toggleCard('pg-3')">
-        <div class="ex-info">
-          <div class="ex-name">Windshield wipers (rotación de cadera)</div>
-          <div class="ex-meta">10 repeticiones · muy lento</div>
-        </div>
-        <span class="ex-tag tag-movilizar">Movilizar</span>
-        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="ex-detail">
-        <div class="detail-grid">
-          <div class="detail-item"><div class="lbl">Posición</div><div class="val">Boca arriba, rodillas juntas y flexionadas.</div></div>
-          <div class="detail-item"><div class="lbl">Movimiento</div><div class="val">Deja caer las rodillas de lado a lado lentamente. Rango libre, sin forzar. Moviliza sacroilíacas y cadera.</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ex-card" id="pg-4">
-      <div class="ex-header" onclick="toggleCard('pg-4')">
-        <div class="ex-info">
-          <div class="ex-name">Swing progresivo sin pelota</div>
-          <div class="ex-meta">20 swings · comenzar a medio rango</div>
-        </div>
-        <span class="ex-tag tag-movilizar">Movilizar</span>
-        <svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="ex-detail">
-        <div class="detail-grid">
-          <div class="detail-item"><div class="val">Chip → medio swing → swing completo. Nunca el primer golpe de la ronda a máxima potencia.</div></div>
-        </div>
-      </div>
-    </div>
+    <div class="ex-card" id="pg-0"><div class="ex-header" onclick="toggleCard('pg-0')"><div class="ex-info"><div class="ex-name">Hip flexor lunge</div><div class="ex-meta">2 series · 30 seg cada lado</div></div><span class="ex-tag tag-liberar">Liberar</span><svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ex-detail"><div class="detail-grid"><div class="detail-item"><div class="val">Misma técnica que la rutina diaria. Retroversión pélvica activa antes de avanzar.</div></div></div></div></div>
+    <div class="ex-card" id="pg-1"><div class="ex-header" onclick="toggleCard('pg-1')"><div class="ex-info"><div class="ex-name">Clamshell</div><div class="ex-meta">2 series · 12 reps cada lado</div></div><span class="ex-tag tag-activar">Activar</span><svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ex-detail"><div class="detail-grid"><div class="detail-item"><div class="val">Activa el glúteo medio antes de cargar la cadera. Crítico para estabilizar la pelvis durante el swing.</div></div></div></div></div>
+    <div class="ex-card" id="pg-2"><div class="ex-header" onclick="toggleCard('pg-2')"><div class="ex-info"><div class="ex-name">Glute bridge</div><div class="ex-meta">2 series · 10 reps</div></div><span class="ex-tag tag-activar">Activar</span><svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ex-detail"><div class="detail-grid"><div class="detail-item"><div class="val">Prepara la cadena posterior (glúteo mayor + isquiotibiales) para el impacto del swing.</div></div></div></div></div>
+    <div class="ex-card" id="pg-3"><div class="ex-header" onclick="toggleCard('pg-3')"><div class="ex-info"><div class="ex-name">Windshield wipers</div><div class="ex-meta">10 repeticiones · muy lento</div></div><span class="ex-tag tag-movilizar">Movilizar</span><svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ex-detail"><div class="detail-grid"><div class="detail-item"><div class="lbl">Posición</div><div class="val">Boca arriba, rodillas juntas y flexionadas. Déjalas caer de lado a lado lentamente.</div></div></div></div></div>
+    <div class="ex-card" id="pg-4"><div class="ex-header" onclick="toggleCard('pg-4')"><div class="ex-info"><div class="ex-name">Swing progresivo sin pelota</div><div class="ex-meta">20 swings · chip → medio → completo</div></div><span class="ex-tag tag-movilizar">Movilizar</span><svg class="ex-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div><div class="ex-detail"><div class="detail-grid"><div class="detail-item"><div class="val">Nunca el primer golpe de la ronda a máxima potencia.</div></div></div></div></div>
   </div>
 
   <!-- GOLF -->
   <div class="section" id="tab-golf">
     <div class="intro-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span>Ajustes técnicos para reducir la carga sobre la cadera izquierda y la columna durante el juego.</span>
     </div>
-
-    <div class="golf-card">
-      <div class="golf-card-title"><span>A</span> Pie izquierdo abierto ~20-30°</div>
-      <p>Rotar el pie izquierdo hacia el target reduce la rotación interna de cadera en el backswing — exactamente el movimiento que más carga el labrum roto y el cartílago dañado (condropatía grado 4). Muchos jugadores de tour lo hacen naturalmente. No afecta la mecánica si se establece desde el setup.</p>
-    </div>
-
-    <div class="golf-card">
-      <div class="golf-card-title"><span>B</span> Backswing a tres cuartos</div>
-      <p>Un three-quarter backswing reduce significativamente la rotación de cadera izquierda. La pérdida de distancia es menor de lo que parece — y se compensa con mayor consistencia y menos dolor al día siguiente.</p>
-    </div>
-
-    <div class="golf-card">
-      <div class="golf-card-title"><span>C</span> Carro eléctrico o carrito de arrastre</div>
-      <p>Caminar 18 hoyos con esta cadera genera fatiga acumulativa que intensifica el dolor post-ronda. Usar carro no es rendirse — es gestionar inteligentemente la carga articular para poder seguir jugando a largo plazo.</p>
-    </div>
-
-    <div class="alert-card" style="margin-top:8px">
-      El dolor post-golf es una señal de sobrecarga articular, no de falta de entrenamiento. La rutina diaria reduce esa sobrecarga, pero los ajustes técnicos son igual de importantes.
-    </div>
+    <div class="golf-card"><div class="golf-card-title"><span>A</span>Pie izquierdo abierto ~20-30°</div><p>Rotar el pie izquierdo hacia el target reduce la rotación interna de cadera en el backswing — exactamente el movimiento que más carga el labrum roto y el cartílago dañado. No afecta la mecánica si se establece desde el setup.</p></div>
+    <div class="golf-card"><div class="golf-card-title"><span>B</span>Backswing a tres cuartos</div><p>Reduce significativamente la rotación de cadera izquierda. La pérdida de distancia es menor de lo que parece y se compensa con mayor consistencia y menos dolor al día siguiente.</p></div>
+    <div class="golf-card"><div class="golf-card-title"><span>C</span>Carro eléctrico o carrito de arrastre</div><p>Caminar 18 hoyos genera fatiga acumulativa que intensifica el dolor. Usar carro es gestionar inteligentemente la carga articular para poder seguir jugando a largo plazo.</p></div>
+    <div class="alert-card" style="margin-top:8px">El dolor post-golf es señal de sobrecarga articular, no de falta de entrenamiento. Los ajustes técnicos son tan importantes como la rutina.</div>
   </div>
 
 </div>
 
-<!-- HISTORIAL (nav view) -->
-<div id="nav-historial" style="display:none; padding:16px; padding-bottom:90px;">
-  <div class="streak-card">
-    <div class="streak-num" id="streak-num">0</div>
-    <div class="streak-lbl">días seguidos</div>
+<!-- HISTORIAL -->
+<div id="nav-historial" style="display:none; padding:14px; padding-bottom:90px;">
+  <div class="streak-row">
+    <div class="streak-card"><div class="streak-num" id="streak-num">0</div><div class="streak-lbl">días seguidos</div></div>
+    <div class="streak-card"><div class="streak-num" id="total-num" style="font-size:36px">0</div><div class="streak-lbl">días totales</div></div>
   </div>
-
-  <div style="background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-bottom:16px;">
-    <div style="font-size:13px; font-weight:600; color:var(--text2); margin-bottom:12px;" id="cal-month-label"></div>
-    <div class="cal-header">
-      <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
-    </div>
+  <div class="cal-card">
+    <div class="cal-month" id="cal-month-label"></div>
+    <div class="cal-header"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
     <div class="calendar-grid" id="cal-grid"></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Completa</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green-light)"></div>Express</div>
+    </div>
   </div>
-
-  <button class="reset-btn" onclick="resetToday()">Reiniciar rutina de hoy</button>
+  <button class="reset-btn" onclick="resetToday()">↺ Reiniciar rutina de hoy</button>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="nav-item active" id="nav-btn-rutina" onclick="showNav('rutina')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
@@ -828,115 +657,133 @@
 
 <script>
 const TOTAL_DIARIA = 8;
-let state = loadState();
+const TOTAL_EXPRESS = 3;
+
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
 
 function loadState() {
   try {
-    const saved = localStorage.getItem('rehab_state');
-    if (saved) return JSON.parse(saved);
+    const s = localStorage.getItem('rehab_v3');
+    if (s) return JSON.parse(s);
   } catch(e) {}
-  return { done: [], history: [] };
+  return { diaria: [], express: [], history: [], lastDate: '' };
 }
 
 function saveState() {
-  try { localStorage.setItem('rehab_state', JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem('rehab_v3', JSON.stringify(state)); } catch(e) {}
 }
 
-function todayStr() {
-  const d = new Date();
-  return d.toISOString().split('T')[0];
+let state = loadState();
+
+// Auto-reset if it's a new day
+function checkDayReset() {
+  const today = todayStr();
+  if (state.lastDate !== today) {
+    state.diaria = [];
+    state.express = [];
+    state.lastDate = today;
+    saveState();
+  }
 }
 
 function init() {
-  const today = todayStr();
+  checkDayReset();
+
   const d = new Date();
   const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  document.getElementById('header-sub').textContent =
+  document.getElementById('header-date').textContent =
     days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()];
 
-  if (!state.done) state.done = [];
-  if (!state.history) state.history = [];
+  state.diaria.forEach(i => applyDone('diaria', i));
+  state.express.forEach(i => applyDone('express', i));
 
-  state.done.forEach(i => markDone(i, false));
   updateProgress();
-  renderCalendar();
+  checkBanners();
 }
 
-function toggleDone(e, cardId, idx) {
-  e.stopPropagation();
-  const card = document.getElementById(cardId);
-  const chk = document.getElementById('chk-' + idx);
-  const btn = card.querySelector('.check-btn');
+function applyDone(section, idx) {
+  if (section === 'diaria') {
+    const card = document.getElementById('ex-' + idx);
+    const chk = document.getElementById('chk-d-' + idx);
+    if (card) { card.classList.add('done'); card.classList.remove('open'); }
+    if (chk) chk.classList.add('checked');
+    const btn = card ? card.querySelector('.check-btn') : null;
+    if (btn) btn.textContent = '✓ Hecho';
+  } else {
+    const card = document.getElementById('xe-' + idx);
+    const chk = document.getElementById('chk-e-' + idx);
+    if (card) { card.classList.add('done'); card.classList.remove('open'); }
+    if (chk) chk.classList.add('checked');
+    const btn = card ? card.querySelector('.check-btn') : null;
+    if (btn) btn.textContent = '✓ Hecho';
+  }
+}
 
-  if (state.done.includes(idx)) {
-    state.done = state.done.filter(i => i !== idx);
-    card.classList.remove('done');
-    chk.classList.remove('checked');
+function toggleDone(e, section, idx) {
+  e.stopPropagation();
+
+  const arr = section === 'diaria' ? state.diaria : state.express;
+  const cardId = section === 'diaria' ? 'ex-' + idx : 'xe-' + idx;
+  const chkId = section === 'diaria' ? 'chk-d-' + idx : 'chk-e-' + idx;
+
+  const card = document.getElementById(cardId);
+  const chk = document.getElementById(chkId);
+  const btn = card ? card.querySelector('.check-btn') : null;
+
+  if (arr.includes(idx)) {
+    state[section] = arr.filter(i => i !== idx);
+    if (card) card.classList.remove('done');
+    if (chk) chk.classList.remove('checked');
     if (btn) btn.textContent = 'Marcar como hecho';
   } else {
-    state.done.push(idx);
-    card.classList.add('done');
-    chk.classList.add('checked');
+    arr.push(idx);
+    state[section] = arr;
+    if (card) { card.classList.add('done'); card.classList.remove('open'); }
+    if (chk) chk.classList.add('checked');
     if (btn) btn.textContent = '✓ Hecho';
-    card.classList.remove('open');
-    card.querySelector('.ex-detail').style.display = '';
   }
 
   saveState();
   updateProgress();
-
-  if (state.done.length === TOTAL_DIARIA) {
-    recordToday();
-  }
+  checkBanners();
 }
 
-function markDone(idx, animate) {
-  const card = document.getElementById('ex-' + idx);
-  if (!card) return;
-  const chk = document.getElementById('chk-' + idx);
-  const btn = card.querySelector('.check-btn');
-  card.classList.add('done');
-  chk.classList.add('checked');
-  if (btn) btn.textContent = '✓ Hecho';
+function checkBanners() {
+  const today = todayStr();
+  const diariaComplete = state.diaria.length === TOTAL_DIARIA;
+  const expressComplete = state.express.length === TOTAL_EXPRESS;
+
+  document.getElementById('banner-diaria').classList.toggle('show', diariaComplete);
+  document.getElementById('banner-express').classList.toggle('show', expressComplete);
+
+  if (diariaComplete && !state.history.some(h => h.date === today && h.type === 'full')) {
+    state.history = state.history.filter(h => h.date !== today);
+    state.history.push({ date: today, type: 'full' });
+    saveState();
+  } else if (expressComplete && !state.history.some(h => h.date === today)) {
+    state.history.push({ date: today, type: 'express' });
+    saveState();
+  }
 }
 
 function updateProgress() {
-  const count = state.done.length;
-  const pct = Math.round(count / TOTAL_DIARIA * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = count + '/' + TOTAL_DIARIA;
+  const activeTab = document.querySelector('.section.active');
+  let count = 0, total = 0;
 
-  const banner = document.getElementById('banner-diaria');
-  if (count === TOTAL_DIARIA) {
-    banner.classList.add('show');
+  if (activeTab && activeTab.id === 'tab-express') {
+    count = state.express.length;
+    total = TOTAL_EXPRESS;
   } else {
-    banner.classList.remove('show');
+    count = state.diaria.length;
+    total = TOTAL_DIARIA;
   }
-}
 
-function recordToday() {
-  const today = todayStr();
-  if (!state.history.includes(today)) {
-    state.history.push(today);
-    saveState();
-    renderCalendar();
-  }
-}
-
-function resetToday() {
-  state.done = [];
-  saveState();
-  for (let i = 0; i < TOTAL_DIARIA; i++) {
-    const card = document.getElementById('ex-' + i);
-    const chk = document.getElementById('chk-' + i);
-    if (card) card.classList.remove('done');
-    if (chk) chk.classList.remove('checked');
-    const btn = card ? card.querySelector('.check-btn') : null;
-    if (btn) btn.textContent = 'Marcar como hecho';
-  }
-  document.getElementById('banner-diaria').classList.remove('show');
-  updateProgress();
+  const pct = total > 0 ? Math.round(count / total * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = count + '/' + total;
 }
 
 function toggleCard(id) {
@@ -945,7 +792,7 @@ function toggleCard(id) {
   const detail = card.querySelector('.ex-detail');
   const isOpen = card.classList.contains('open');
   card.classList.toggle('open', !isOpen);
-  detail.style.display = isOpen ? '' : 'block';
+  if (detail) detail.style.display = isOpen ? '' : 'block';
 }
 
 let currentTab = 'diaria';
@@ -956,29 +803,59 @@ function showTab(name, btn) {
   if (sec) sec.classList.add('active');
   if (btn) btn.classList.add('active');
   currentTab = name;
+  updateProgress();
 }
 
 function showNav(view) {
   const mainContent = document.getElementById('main-content');
   const mainTabs = document.getElementById('main-tabs');
   const historial = document.getElementById('nav-historial');
-  const btnRutina = document.getElementById('nav-btn-rutina');
-  const btnHist = document.getElementById('nav-btn-historial');
+  const btnR = document.getElementById('nav-btn-rutina');
+  const btnH = document.getElementById('nav-btn-historial');
 
   if (view === 'historial') {
     mainContent.style.display = 'none';
     mainTabs.style.display = 'none';
     historial.style.display = 'block';
-    btnRutina.classList.remove('active');
-    btnHist.classList.add('active');
+    btnR.classList.remove('active');
+    btnH.classList.add('active');
     renderCalendar();
   } else {
     mainContent.style.display = 'block';
     mainTabs.style.display = 'flex';
     historial.style.display = 'none';
-    btnRutina.classList.add('active');
-    btnHist.classList.remove('active');
+    btnR.classList.add('active');
+    btnH.classList.remove('active');
   }
+}
+
+function resetToday() {
+  state.diaria = [];
+  state.express = [];
+  const today = todayStr();
+  state.history = state.history.filter(h => h.date !== today);
+  saveState();
+
+  for (let i = 0; i < TOTAL_DIARIA; i++) {
+    const card = document.getElementById('ex-' + i);
+    const chk = document.getElementById('chk-d-' + i);
+    if (card) card.classList.remove('done');
+    if (chk) chk.classList.remove('checked');
+    const btn = card ? card.querySelector('.check-btn') : null;
+    if (btn) btn.textContent = 'Marcar como hecho';
+  }
+  for (let i = 0; i < TOTAL_EXPRESS; i++) {
+    const card = document.getElementById('xe-' + i);
+    const chk = document.getElementById('chk-e-' + i);
+    if (card) card.classList.remove('done');
+    if (chk) chk.classList.remove('checked');
+    const btn = card ? card.querySelector('.check-btn') : null;
+    if (btn) btn.textContent = 'Marcar como hecho';
+  }
+  document.getElementById('banner-diaria').classList.remove('show');
+  document.getElementById('banner-express').classList.remove('show');
+  updateProgress();
+  renderCalendar();
 }
 
 function renderCalendar() {
@@ -986,63 +863,51 @@ function renderCalendar() {
   const year = today.getFullYear();
   const month = today.getMonth();
   const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-
   document.getElementById('cal-month-label').textContent = months[month] + ' ' + year;
 
   const firstDay = new Date(year, month, 1);
   let startDow = firstDay.getDay();
   startDow = startDow === 0 ? 6 : startDow - 1;
-
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const todayStr_ = todayStr();
 
   const grid = document.getElementById('cal-grid');
   grid.innerHTML = '';
-
   for (let i = 0; i < startDow; i++) {
     const el = document.createElement('div');
     el.className = 'cal-day empty';
     grid.appendChild(el);
   }
-
   for (let d = 1; d <= daysInMonth; d++) {
     const dateStr = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
     const el = document.createElement('div');
     el.className = 'cal-day';
     el.textContent = d;
-    if (state.history.includes(dateStr)) el.classList.add('done-day');
+    const entry = state.history.find(h => h.date === dateStr);
+    if (entry) el.classList.add(entry.type === 'full' ? 'done-full' : 'done-express');
     if (dateStr === todayStr_) el.classList.add('today');
     grid.appendChild(el);
   }
 
-  const streak = calcStreak();
-  document.getElementById('streak-num').textContent = streak;
+  document.getElementById('streak-num').textContent = calcStreak();
+  document.getElementById('total-num').textContent = state.history.length;
 }
 
 function calcStreak() {
   if (!state.history.length) return 0;
-  const sorted = [...state.history].sort().reverse();
-  const today = new Date();
+  const dates = state.history.map(h => h.date).sort().reverse();
   let streak = 0;
-  let check = new Date(today);
-
+  const check = new Date();
   for (let i = 0; i < 365; i++) {
     const ds = check.toISOString().split('T')[0];
-    if (sorted.includes(ds)) {
-      streak++;
-      check.setDate(check.getDate() - 1);
-    } else {
-      if (i === 0) { check.setDate(check.getDate() - 1); continue; }
-      break;
-    }
+    if (dates.includes(ds)) { streak++; check.setDate(check.getDate() - 1); }
+    else { if (i === 0) { check.setDate(check.getDate() - 1); continue; } break; }
   }
   return streak;
 }
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  });
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
 }
 
 init();
